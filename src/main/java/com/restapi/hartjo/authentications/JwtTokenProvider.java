@@ -4,14 +4,20 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import io.jsonwebtoken.Claims;
+import com.restapi.hartjo.constants.GlobalConstants;
+
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
-import com.restapi.hartjo.constants.GlobalConstants;
+
+
 
 
 /**
@@ -25,10 +31,16 @@ import com.restapi.hartjo.constants.GlobalConstants;
 @Component
 public class JwtTokenProvider {
 	
+	@Autowired
+    private MyUserDetails myUserDetails;
+	
+	
 	private long EXPIRATIONTIME 	= GlobalConstants.EXPIRATIONTIME;
     private String secret 			= GlobalConstants.SECRET_KEY;
     private String tokenPrefix 		= GlobalConstants.TOKEN_PREFIX;
     private Date now 				= new Date();
+    
+    
     
 	
 	public String generateJwt(String payloads) {
@@ -48,17 +60,14 @@ public class JwtTokenProvider {
 	public boolean validateToken(String token) {
 		try {
 			
-	    	Claims data = Jwts.parser()
+			Jwts.parser()
 	                .setSigningKey(secret)
 	                .parseClaimsJws(token)
 	                .getBody();
-	    	System.out.println(data);
-	    	
 	    	return true;
-	    } catch (JwtException | IllegalArgumentException e) {
-	    	System.out.println(e);
-	    }
-		return false;
+		} catch (JwtException | IllegalArgumentException e) {
+		      return false;
+		}
 	}
 	
 	
@@ -68,6 +77,12 @@ public class JwtTokenProvider {
 	      return bearerToken.substring(7, bearerToken.length());
 	    }
 	    return null;
-	  }
+	}
+	
+	
+	public Authentication getAuthentication(String token) {
+		UserDetails userDetails = myUserDetails.loadUserByUsername("username");
+	    return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+	}
  
 }

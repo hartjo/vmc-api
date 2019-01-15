@@ -29,7 +29,7 @@ public class UserController {
 	
 	
 	@RequestMapping("/sample")
-	public String sample2() {
+	public String sample() {
 		
 		return "sample";
 	}

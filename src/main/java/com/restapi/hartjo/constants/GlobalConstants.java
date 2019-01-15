@@ -1,5 +1,7 @@
 package com.restapi.hartjo.constants;
 
+import org.springframework.context.annotation.ComponentScan;
+
 /**
  * 
  * @author jan.llarenas
@@ -7,6 +9,8 @@ package com.restapi.hartjo.constants;
  * Global Constants
  */
 
+
+@ComponentScan
 public class GlobalConstants {
 	
 	//Secret Key
