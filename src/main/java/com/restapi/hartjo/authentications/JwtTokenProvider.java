@@ -45,12 +45,9 @@ public class JwtTokenProvider {
 	
 	public String generateJwt(String payloads) {
 		
-		String JWT = 	Jwts.builder()
-	             		.claim("payloads", payloads)
-	             		.setIssuedAt(now)
-	             		.setExpiration(new Date(System.currentTimeMillis() + EXPIRATIONTIME))
-	             		.signWith(SignatureAlgorithm.HS512, secret)
-	             		.compact();
+		String JWT = Jwts.builder().claim("payloads", payloads).setIssuedAt(now)
+				.setExpiration(new Date(System.currentTimeMillis() + EXPIRATIONTIME))
+				.signWith(SignatureAlgorithm.HS512, secret).compact();
 		
 	   return tokenPrefix + JWT;
 	}
@@ -60,13 +57,10 @@ public class JwtTokenProvider {
 	public boolean validateToken(String token) {
 		try {
 			
-			Jwts.parser()
-	                .setSigningKey(secret)
-	                .parseClaimsJws(token)
-	                .getBody();
+			Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
 	    	return true;
 		} catch (JwtException | IllegalArgumentException e) {
-		      return false;
+			return false;
 		}
 	}
 	
