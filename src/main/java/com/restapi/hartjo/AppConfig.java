@@ -7,7 +7,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-@ComponentScan("com.concretepage")
 @EnableWebMvc
 public class AppConfig implements WebMvcConfigurer  {
 	@Override

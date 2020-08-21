@@ -25,6 +25,7 @@ System.out.println("config confing confing");
 
 	    // Entry points
 	    http.authorizeRequests()//
+	    	.antMatchers("/users/login").permitAll()//
 	        .antMatchers("/users/signin").permitAll()//
 	        .antMatchers("/users/signup").permitAll()//
 	        .antMatchers("/sample/*").permitAll()
