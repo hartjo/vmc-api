@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import com.restapi.hartjo.constants.GlobalConstants;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -58,10 +59,15 @@ public class JwtTokenProvider {
 		try {
 			
 			Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+			
 	    	return true;
 		} catch (JwtException | IllegalArgumentException e) {
 			return false;
 		}
+	}
+	
+	public Claims tokenParser(String token) {
+		return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
 	}
 	
 	
@@ -75,7 +81,10 @@ public class JwtTokenProvider {
 	
 	
 	public Authentication getAuthentication(String token) {
-		UserDetails userDetails = myUserDetails.loadUserByUsername("username");
+		Claims claims = tokenParser(token);
+		
+		System.out.println(claims.get("payloads").toString());
+		UserDetails userDetails = myUserDetails.loadUserByUsername(claims.get("payloads").toString());
 	    return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
 	}
  

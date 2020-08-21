@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: rest-api
+Bundle-SymbolicName: rest-api
+Bundle-Version: 1.0.0.qualifier
+Export-Package: com,
+ com.restapi,
+ com.restapi.hartjo,
+ com.restapi.hartjo.authentications,
+ com.restapi.hartjo.constants,
+ com.restapi.hartjo.controllers,
+ com.restapi.hartjo.dbconfig,
+ com.restapi.hartjo.exceptions,
+ com.restapi.hartjo.models,
+ com.restapi.hartjo.models.query,
+ com.restapi.hartjo.models.query.assoc
